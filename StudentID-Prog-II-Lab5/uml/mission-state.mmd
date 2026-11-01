@@ -1,0 +1,8 @@
+stateDiagram-v2
+[*] --> ASSIGNED
+ASSIGNED --> FAILED : active mission / unsuitable agent / unavailable agent / insufficient resources / environment restriction
+ASSIGNED --> IN_PROGRESS : advanceTime(1)
+IN_PROGRESS --> COMPLETED : duration reached
+IN_PROGRESS --> FAILED : equipment failure / dust storm / communication disruption / rover breakdown
+COMPLETED --> [*]
+FAILED --> [*] : terminal state; create a new Mission to retry

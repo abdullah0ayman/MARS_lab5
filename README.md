@@ -1,25 +1,13 @@
 # MARS_lab5
 
-This repository contains the complete organized MARS-OPS Programming II project.
-
-The project is intentionally simple and uses **no Java enums**. Mission types, mission states, emergency types, facility types, environmental conditions, health statuses, and resource names are represented with strings.
-
-## Project location
-
-Open the complete project here:
+The final Programming II project is in:
 
 ```text
-MARS-OPS-Organized-Project/
+StudentID-Prog-II-Lab5/
 ```
 
-## Compile and run
+It is a simple NetBeans-ready Java project for the MARS-OPS Mars colony simulation. The source code uses packages, enums for fixed values, inheritance, abstract classes, encapsulation, and polymorphism.
 
-```bash
-cd MARS-OPS-Organized-Project
-rm -rf out
-mkdir out
-javac -Xlint:all -d out $(find src -name '*.java')
-java -cp out Main
-```
+Open `StudentID-Prog-II-Lab5` in NetBeans. The main class is `marsops.app.Main` and the extra checks are in `marsops.app.ProjectTests`.
 
-See `MARS-OPS-Organized-Project/docs/PROJECT-STRUCTURE.md` for the responsibility of every folder and class.
+The project README, UML diagrams, editable Mermaid files, and final review report are inside the project folder.

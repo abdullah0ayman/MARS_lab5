@@ -1,0 +1,26 @@
+sequenceDiagram
+actor Operator
+participant Colony as MarsColony
+participant Habitat
+participant Emergency
+participant Responders as Agents
+participant Inventory as ResourceInventory
+Operator->>Colony: handleOxygenLeak(habitat, loss)
+Colony->>Emergency: create OXYGEN_LEAK
+Colony->>Habitat: remove initial oxygen loss
+Colony->>Responders: find available human and robot responders
+alt responders unavailable
+  Colony->>Habitat: remove same loss again
+  Colony->>Emergency: mark unresolved
+else responders available
+  Colony->>Inventory: check SPARE_PARTS and BATTERY_POWER
+  alt response resources insufficient
+    Colony->>Habitat: remove same loss again
+    Colony->>Emergency: mark unresolved
+  else enough resources
+    Colony->>Inventory: consume response resources
+    Colony->>Responders: dispatch and release
+    Colony->>Habitat: repair leak
+    Colony->>Emergency: RESOLVED
+  end
+end

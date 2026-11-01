@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="StudentID-Prog-II-Lab5" default="run" basedir=".">
+    <property file="nbproject/project.properties"/>
+
+    <target name="clean">
+        <delete dir="${build.dir}"/>
+    </target>
+
+    <target name="compile">
+        <mkdir dir="${build.classes.dir}"/>
+        <javac srcdir="${src.dir}" destdir="${build.classes.dir}"
+               source="${javac.source}" target="${javac.target}"
+               includeantruntime="false" encoding="${javac.encoding}"/>
+    </target>
+
+    <target name="run" depends="compile">
+        <java classname="${main.class}" fork="true" failonerror="true">
+            <classpath>
+                <pathelement location="${build.classes.dir}"/>
+            </classpath>
+        </java>
+    </target>
+
+    <target name="test" depends="compile">
+        <java classname="marsops.app.ProjectTests" fork="true" failonerror="true">
+            <classpath>
+                <pathelement location="${build.classes.dir}"/>
+            </classpath>
+        </java>
+    </target>
+</project>

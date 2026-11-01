@@ -1,0 +1,33 @@
+sequenceDiagram
+actor Operator
+participant Colony as MarsColony
+participant Mission
+participant Agent
+participant Inventory as ResourceInventory
+Operator->>Colony: submitMission(mission, agents)
+Colony->>Colony: check activeMission and environment
+alt another mission active or restriction
+  Colony->>Mission: fail(reason)
+  Colony-->>Operator: FAILED and never active
+else checks continue
+  Colony->>Agent: isAvailable and canPerform(mission)
+  alt unsuitable or unavailable agent
+    Colony->>Mission: fail(reason)
+    Colony-->>Operator: FAILED
+  else capable agents
+    Colony->>Colony: check operational facility resources
+    alt insufficient resources
+      Colony->>Mission: fail(reason)
+      Colony-->>Operator: FAILED and resources unchanged
+    else enough resources
+      Colony->>Inventory: consume resources
+      Colony-->>Agent: mark busy
+      loop advanceTime one unit
+        Operator->>Colony: advanceTime(1)
+        Colony->>Mission: startProgress or advanceOneUnit
+      end
+      Colony->>Mission: COMPLETED or FAILED
+      Colony-->>Agent: release agents
+    end
+  end
+end

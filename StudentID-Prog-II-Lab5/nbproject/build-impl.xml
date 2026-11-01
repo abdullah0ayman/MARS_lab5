@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="StudentID-Prog-II-Lab5-impl" default="default" basedir="..">
+    <target name="default" depends="compile"/>
+    <target name="compile">
+        <ant antfile="build.xml" target="compile"/>
+    </target>
+    <target name="run">
+        <ant antfile="build.xml" target="run"/>
+    </target>
+    <target name="test">
+        <ant antfile="build.xml" target="test"/>
+    </target>
+    <target name="clean">
+        <ant antfile="build.xml" target="clean"/>
+    </target>
+</project>

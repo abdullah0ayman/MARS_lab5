@@ -1,0 +1,14 @@
+flowchart LR
+  colony["colony1 : MarsColony\nname = Ares Research Colony\nenvironment = NORMAL"]
+  scientist["scientist1 : Scientist\nname = Dr. Lina\nskills = geology\navailable = false"]
+  rover["rover1 : ExplorationRover\nbatteryLevel = 80\nlocation = Martian Surface"]
+  habitat["habitatA : Habitat\noperational = true\noxygen = 300\noxygenLeak = false"]
+  inventory["inventory1 : ResourceInventory\nOXYGEN = 300\nWATER = 100"]
+  mission["mission1 : Mission\ntype = EXPLORATION\nstate = IN_PROGRESS\nprogress = 1/3"]
+  colony -->|crew| scientist
+  colony -->|robots| rover
+  colony -->|facilities| habitat
+  colony -->|activeMission| mission
+  scientist -->|assigned agent| mission
+  rover -->|assigned agent| mission
+  habitat -->|contains| inventory

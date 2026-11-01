@@ -1,0 +1,135 @@
+classDiagram
+class MarsColony {
+ -String name
+ -List~CrewMember~ crew
+ -List~Robot~ robots
+ -List~Facility~ facilities
+ -List~Mission~ missions
+ -Mission activeMission
+ -EnvironmentCondition environment
+ +submitMission(Mission,List~Agent~) void
+ +advanceTime(int) void
+ +consumeResources(Map) boolean
+ +handleOxygenLeak(Habitat,int) Emergency
+ +handleFire(Laboratory) Emergency
+ +handleMedicalEmergency(CrewMember,Facility) Emergency
+ +handleRoverBreakdown(ExplorationRover,Mission) Emergency
+ +statusReport() String
+}
+class Agent {
+ <<abstract>>
+ -String name
+ -String id
+ -String currentLocation
+ -boolean available
+ -boolean damaged
+ +canPerform(Mission) boolean
+ +canHandle(EmergencyType) boolean
+ +isUsable() boolean
+}
+class CrewMember {
+ <<abstract>>
+ -HealthStatus healthStatus
+ -int fatigue
+ -List~String~ skills
+ +hasSkill(String) boolean
+}
+class Scientist
+class Engineer
+class MedicalOfficer
+class Robot {
+ <<abstract>>
+ -int batteryLevel
+ +useBattery(int) void
+}
+class ExplorationRover
+class RepairRobot
+class Drone
+class Facility {
+ -FacilityType type
+ -ResourceInventory resources
+ -List~String~ equipment
+}
+class Habitat
+class Laboratory
+class StorageFacility
+class PowerStation
+class CommunicationStation
+class LifeSupportSystem
+class ResourceInventory
+class Mission {
+ -MissionType type
+ -MissionState state
+ -int duration
+ -int elapsedTime
+ -String failureReason
+ +startProgress() void
+ +advanceOneUnit() void
+ +fail(String) void
+ +isFinished() boolean
+}
+class Emergency {
+ -EmergencyType type
+ -EmergencyState state
+ -String location
+ -String outcome
+}
+class MissionState {
+ <<enumeration>>
+ ASSIGNED
+ IN_PROGRESS
+ COMPLETED
+ FAILED
+}
+class MissionType {
+ <<enumeration>>
+ EXPLORATION
+ REPAIR
+ RESEARCH
+ RESCUE
+}
+class EnvironmentCondition {
+ <<enumeration>>
+ NORMAL
+ DUST_STORM
+ COMMUNICATION_DISRUPTION
+}
+class ResourceType {
+ <<enumeration>>
+ OXYGEN
+ WATER
+ FOOD
+ FUEL
+ BATTERY_POWER
+ MEDICAL_SUPPLIES
+ SPARE_PARTS
+}
+MarsColony "1" o-- "0..*" CrewMember : aggregation
+MarsColony "1" o-- "0..*" Robot : aggregation
+MarsColony "1" o-- "0..*" Facility : aggregation
+MarsColony "1" o-- "0..*" Mission : aggregation
+MarsColony "1" o-- "0..*" Emergency : aggregation
+Agent <|-- CrewMember
+Agent <|-- Robot
+CrewMember <|-- Scientist
+CrewMember <|-- Engineer
+CrewMember <|-- MedicalOfficer
+Robot <|-- ExplorationRover
+Robot <|-- RepairRobot
+Robot <|-- Drone
+Facility <|-- Habitat
+Facility <|-- Laboratory
+Facility <|-- StorageFacility
+Facility <|-- PowerStation
+Facility <|-- CommunicationStation
+Habitat *-- LifeSupportSystem : composition
+Facility *-- ResourceInventory : composition
+Agent "0..*" -- "0..*" Mission : association
+Mission "0..1" --> Facility : target
+Mission --> MissionType
+Mission --> MissionState
+Facility --> FacilityType
+Emergency --> EmergencyType
+Emergency --> EmergencyState
+ResourceInventory --> ResourceType
+MarsColony --> EnvironmentCondition

@@ -1,0 +1,36 @@
+flowchart LR
+  operator[Colony Operator]
+  emergencyOperator[Emergency Operator]
+  boundary{{MARS-OPS System}}
+  managePeople([Manage crew and robots])
+  manageFacilities([Manage facilities and equipment])
+  monitorResources([Monitor resources])
+  report([Generate colony status report])
+  submit([Submit mission])
+  assign([Assign and execute mission])
+  monitorMission([Monitor mission])
+  advance([Advance simulation time])
+  environment([Change environmental condition])
+  emergency([Trigger and handle emergency])
+  outcome([Inspect mission and emergency outcomes])
+  operator --- boundary
+  emergencyOperator --- boundary
+  boundary --- managePeople
+  boundary --- manageFacilities
+  boundary --- monitorResources
+  boundary --- report
+  boundary --- submit
+  boundary --- assign
+  boundary --- monitorMission
+  boundary --- advance
+  boundary --- environment
+  boundary --- emergency
+  boundary --- outcome
+  submit -.->|include| assign
+  assign -.->|include| monitorResources
+  assign -.->|extend: failure| outcome
+  advance -.->|include| monitorMission
+  emergency -.->|include| monitorResources
+  emergency -.->|extend: outcome| outcome
+  emergencyOperator --- emergency
+  emergencyOperator --- outcome

@@ -1,0 +1,17 @@
+sequenceDiagram
+actor Operator
+participant Colony as MarsColony
+participant Mission
+participant Rover
+Operator->>Colony: setEnvironment(DUST_STORM)
+alt no active mission
+  Operator->>Colony: submit exploration mission
+  Colony->>Mission: fail(surface restriction reason)
+  Colony-->>Operator: FAILED and never active
+else exploration mission in progress
+  Colony->>Mission: fail(active mission restriction)
+  Colony->>Rover: release rover
+  Colony-->>Operator: FAILED
+end
+Operator->>Colony: setEnvironment(COMMUNICATION_DISRUPTION)
+Colony->>Mission: fail active rescue mission if needed
